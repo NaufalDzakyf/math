@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>tutor profile</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<header class="header">
+   
+   <section class="flex">
+
+      <a href="home.html" class="logo">Matematika</a>
+
+      <form action="search.html" method="post" class="search-form">
+         <input type="text" name="search_box" required placeholder="search..." maxlength="100">
+         <button type="submit" class="fas fa-search"></button>
+      </form>
+
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="search-btn" class="fas fa-search"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="toggle-btn" class="fas fa-sun"></div>
+      </div>
+
+      <div class="profile">
+         <img src="images/pic-1.jpg" class="image" alt="">
+         <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
+         <p class="role">Murid</p>
+         <a href="profile.html" class="btn">view profile</a>
+         <div class="flex-btn">
+            <a href="logout.html" class="option-btn">logout</a>
+         </div>
+      </div>
+
+   </section>
+
+</header>   
+
+<div class="side-bar">
+
+   <div id="close-btn">
+      <i class="fas fa-times"></i>
+   </div>
+
+   <div class="profile">
+      <img src="images/pic-1.jpg" class="image" alt="">
+      <div>Hello <span class="loggedUserFName"></span> <span class="loggedUserLName"></span></div>
+      <!-- <div>Last Name: <span class="loggedUserLName"></span></div> -->
+      <p class="role">Murid</p>
+      <a href="profile.html" class="btn">view profile</a>
+   </div>
+
+   <nav class="navbar">
+      <a href="beranda.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+      <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
+      <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
+      <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
+   </nav>
+
+</div>
+
+<!-- <section class="teacher-profile">
+
+   <h1 class="heading">profile details</h1>
+
+   <div class="details">
+      <div class="tutor">
+         <img src="images/pic-2.jpg" alt="">
+         <h3>john deo</h3>
+         <span>developer</span>
+      </div>
+      <div class="flex">
+         <p>total playlists : <span>4</span></p>
+         <p>total videos : <span>18</span></p>
+         <p>total likes : <span>1208</span></p>
+         <p>total comments : <span>52</span></p>
+      </div>
+   </div>
+
+</section> -->
+
+<section class="courses">
+
+   <h1 class="heading">Quiz Statistika</h1>
+
+   <div class="box-container">
+
+      <div class="box">
+         <div class="thumb">
+            <img src="images/thumb-1.png" alt="">
+         </div>
+         <h3 class="title">Populasi dan Sampel</h3>
+         <a href="quiz-populasi-sampel.html" class="inline-btn">view playlist</a>
+      </div>
+
+      <div class="box">
+         <div class="thumb">
+            <img src="images/thumb-2.png" alt="">
+         </div>
+         <h3 class="title">Ukuran Pemusatan Data</h3>
+         <a href="quiz-ukuran-pemusatan-data.html" class="inline-btn">view playlist</a>
+      </div>
+
+      <div class="box">
+         <div class="thumb">
+            <img src="images/thumb-3.png" alt="">
+         </div>
+         <h3 class="title">Ukuran Penyebaran Data</h3>
+         <a href="quiz-ukuran-penyebaran-data.html" class="inline-btn">view playlist</a>
+      </div>
+
+   </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+<script type="module" src="./homepage.js"></script>
+   
+</body>
+</html>
