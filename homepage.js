@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const auth = getAuth();
 const db = getFirestore();
 
 const updateAllElements = (className, value) => {
-   document.querySelectorAll(`.${className}`).forEach(el => el.innerText = value);
+    document.querySelectorAll(`.${className}`).forEach(el => el.innerText = value);
 };
 
 onAuthStateChanged(auth, (user) => {
@@ -30,6 +30,12 @@ onAuthStateChanged(auth, (user) => {
                     updateAllElements('loggedUserFName', userData.firstName);
                     updateAllElements('loggedUserLName', userData.lastName);
                     updateAllElements('loggedUserEmail', userData.email);
+                    const profileImages = document.querySelectorAll('.profile img')
+                    if (userData.gender === 'female') {
+                        profileImages.forEach(img => img.src = 'images/pic-2.jpg');
+                    }else {
+                        profileImages.forEach(img => img.src = 'images/pic-1.jpg')
+                    }
                 } else {
                     console.log("No document found matching ID");
                 }
@@ -39,5 +45,19 @@ onAuthStateChanged(auth, (user) => {
             });
     } else {
         console.log("User ID not found in localStorage");
+    }
+});
+
+// Delegated logout listener
+document.body.addEventListener('click', (e) => {
+    if (e.target && e.target.id === 'logout') {
+        localStorage.removeItem('loggedInUserID');
+        signOut(auth)
+            .then(() => {
+                window.location.href = 'index.html';
+            })
+            .catch((error) => {
+                console.error('Error during logout:', error);
+            });
     }
 });

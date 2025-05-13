@@ -103,6 +103,40 @@ section{
    display: inline-block;
 }
 
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 50rem;
+  padding-bottom: 12rem; /* 👈 Memberi ruang agar suggestion tidak menumpuk input */
+}
+
+.suggestion-box {
+  position: absolute;
+  top: calc(100% +8px); /* 5px jarak dari input */
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 250px;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 900;
+  border-top: none;
+  border-radius: 0 0 .5rem .5rem;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.suggestion-box li {
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.suggestion-box li:hover {
+  background-color: #f0f0f0;
+}
+
 .btn,
 .inline-btn{
    background-color: var(--main-color);
@@ -147,6 +181,7 @@ section{
    justify-content: space-between;
    position: relative;
    padding: 1.5rem 2rem;
+   gap: 2rem;
 }
 
 .header .flex .logo{
@@ -158,14 +193,77 @@ section{
 }
 
 .header .flex .search-form{
+   position: relative;
    width: 50rem;
    border-radius: .5rem;
    background-color: var(--light-bg);
    padding:1.5rem 2rem;
    display: flex;
-   gap:2rem;
+   gap:1rem;
+}
+
+/* Wrapper search agar responsif */
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 40%;
+  max-width: 100rem;
+  padding: 1rem 2rem;
+  border-radius: .5rem;
+  background: var(--light-bg);
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
 
 }
+
+/* Input search */
+.search-form input {
+  position: relative;
+  z-index: 1;
+}
+
+/* Button search */
+.search-form button {
+  background: none;
+  font-size: 2rem;
+  color: var(--black);
+  cursor: pointer;
+}
+
+
+
+/* Autosuggestion dropdown */
+.suggestion-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 999;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: .5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.suggestion-box li {
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.suggestion-box li:hover {
+  background-color: #f0f0f0;
+}
+
 
 .header .flex .search-form input{
    width: 100%;
@@ -244,6 +342,21 @@ section{
    font-size: 1.8rem;
    color: var(--light-color);
 }
+
+#logout {
+   background-color: red;
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   z-index: 9999;
+   position: relative;
+ }
+ 
+ #logout:hover {
+   background-color: black;
+ }
 
 #search-btn{
    display: none;
@@ -558,6 +671,36 @@ section{
    border-radius: .5rem;
    background-color: var(--white);
    padding: 2rem;
+}
+
+.courses .box-container .box:hover i{
+   display: flex;
+   color: var(--main-color);
+}
+
+/* Hover untuk tombol biru */
+.btn:hover {
+   background-color: #2980b9;
+   color: #fff;
+}
+
+/* Hover untuk tombol unduh */
+.btn.download:hover {
+   background-color: #27ae60;
+}
+
+.title{
+   color: var(--black);
+   font-size: 14px;
+
+}
+
+.courses .box-container .box:hover h3{
+   color: var(--main-color);
+}
+
+#thumb:hover img{
+   color: var(--main-color);
 }
 
 .courses .box-container .box .tutor{
@@ -1217,13 +1360,13 @@ section{
    padding: 2rem;
 }
 
-.user-profile .info .user{
+.user-profile .info .profile{
    text-align: center;
    margin-bottom: 2rem;
    padding: 1rem;
 }
 
-.user-profile .info .user img{
+.user-profile .info .profile img{
    height: 10rem;
    width: 10rem;
    border-radius: 50%;
@@ -1231,12 +1374,12 @@ section{
    margin-bottom: 1rem;
 }
 
-.user-profile .info .user h3{
+.user-profile .info .profile h3{
    font-size: 2rem;
    color: var(--black);
 }
 
-.user-profile .info .user p{
+.user-profile .info .profile p{
    font-size: 1.7rem;
    color: var(--light-color);
    padding: .3rem 0;
@@ -1469,6 +1612,7 @@ section{
    #search-btn{
       display: inline-block;
    }
+   
 
    .header .flex .search-form{
       position: absolute;
@@ -1483,10 +1627,49 @@ section{
       transition: .2s linear;
    }
 
+   .search-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      z-index: 100;
+      padding: .8rem 1.5rem;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   }   
+
    .header .flex .search-form.active{
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      ;
    }
 
+   .search-form {
+    flex-direction: column;
+    align-items: stretch;
+    padding: .5rem 1rem;
+   }
+
+   .search-form button {
+    align-self: flex-end;
+   }
+   .search-container{
+      margin-bottom: 20rem;
+   }
+
+   .suggestion-box{
+      position: fixed;
+      top: 12.5rem;
+      left: 2rem;
+      width: auto;
+      background-color: white;
+      z-index: 2000;
+      max-height: 50vh;
+      overflow-y: auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+   }
 }
 
 @media (max-width:450px){

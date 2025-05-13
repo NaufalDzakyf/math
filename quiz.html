@@ -4,7 +4,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>teachers</title>
+   <title>Quiz</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -21,26 +21,19 @@
 
       <a href="beranda.html" class="logo">Matematika</a>
 
-      <form action="search.html" method="post" class="search-form">
-         <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
-         <button type="submit" class="fas fa-search"></button>
-      </form>
-
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="search-btn" class="fas fa-search"></div>
+         <!-- <div id="search-btn" class="fas fa-search"></div> -->
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
       </div>
 
       <div class="profile">
-         <img src="images/pic-1.jpg" class="image" alt="">
-         <h3 class="name">shaikh anas</h3>
-         <p class="role">studen</p>
-         <a href="profile.html" class="btn">view profile</a>
-         <div class="flex-btn">
-            <a href="logout.html" class="option-btn">Logout</a>
-         </div>
+          <img src="images/pic-1.jpg" class="image" alt="">
+          <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
+          <p class="role">student</p>
+          <a href="profile.html" class="btn">view profile</a>
+          <button id="logout" class="btn">Logout</button>
       </div>
 
    </section>
@@ -66,56 +59,70 @@
       <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
       <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
       <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
+      <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
    </nav>
 
 </div>
 
-<section class="teachers">
+<section class="courses">
 
    <h1 class="heading">Quiz</h1>
 
-   <form action="" method="post" class="search-tutor">
-      <input type="text" name="search_box" placeholder="search tutors..." required maxlength="100">
-      <button type="submit" class="fas fa-search" name="search_tutor"></button>
-   </form>
-
    <div class="box-container">
+
       <div class="box">
-         <div class="tutor">
-            <i class="fa fa-pie-chart" style="font-size: 22px;"></i>
-            <div>
-               <h3>Statistika</h3>
-            </div>
+         <div class="thumb">
+            <img src="images/Statistika.png" alt="">
+            <span>4 Quiz</span>
          </div>
-         <img src="" alt="">
-         <a href="quiz-statistika.html" class="inline-btn">view</a>
+         <h3 class="title">Statistika</h3>
+         <a href="quiz-statistika.html" class="inline-btn">view playlist</a>
       </div>
 
       <div class="box">
-         <div class="tutor">
-            <i class="fa-solid fa-dice" style="font-size: 22px;"></i>
-            <div>
-               <h3>Peluang</h3>
-            </div>
+         <div class="thumb">
+            <img src="images/peluang.png" alt="">
+            <span>Belum Tersedia</span>
          </div>
-         <a href="quiz-peluang.html" class="inline-btn">View</a>
+         <h3 class="title">Peluang</h3>
       </div>
 
       <div class="box">
-         <div class="tutor">
-         <i class="fa-solid fa-grip" style="font-size: 22px;">‌</i>
-            <div>
-               <h3>Matriks</h3>
-            </div>
+         <div class="thumb">
+            <img src="images/Barisan dan Deret.png" alt="">
+            <span>Belum Tersedia</span>
          </div>
-         <a href="quiz-matriks.html" class="inline-btn">View </a>
+         <h3 class="title">Barisan dan Deret</h3>
+      </div>
+
+      <div class="box">
+         <div class="thumb">
+            <img src="images/Logika Matematika.png" alt="">
+            <span>Belum Tersedia</span>
+         </div>
+         <h3 class="title">Logika Matematika</h3>
+      </div>
+
+      <div class="box">
+         <div class="thumb">
+            <img src="images/Matriks.png" alt="">
+            <span>Belum Tersedia</span>
+         </div>
+         <h3 class="title">Matriks</h3>
+      </div>
+
+      <div class="box">
+         <div class="thumb">
+            <img src="images/fungsi-komposisi.png" alt="">
+            <span>Belum Tersedia</span>
+         </div>
+         <h3 class="title">Fungsi dan Komposisi</h3>
       </div>
 
    </div>
 
+
 </section>
-
-
 
 
 
@@ -132,6 +139,7 @@
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
 <script type="module" src="./homepage.js"></script>
+<!-- <script type="module" src="./update-profile.js"></script> -->
    
 </body>
 </html>

@@ -53,6 +53,7 @@ if (signUp) {
     const password = document.getElementById('rPassword').value;
     const firstName = document.getElementById('fName').value;
     const lastName = document.getElementById('lName').value;
+    const gender = document.getElementById('gender').value;
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -60,7 +61,8 @@ if (signUp) {
         const userData = {
           email,
           firstName,
-          lastName
+          lastName,
+          gender
         };
         showMessage('Account created successfully', 'signUpMessage');
         const docRef = doc(db, "users", user.uid);

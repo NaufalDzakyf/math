@@ -45,6 +45,36 @@ input{
     position: absolute;
     color: black;
 }
+
+.input-group select {
+  width: 100%;
+  padding: 10px 10px 10px 35px; /* mirip dengan input yang ada icon */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  appearance: none; /* hilangkan tampilan default */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  z-index: 1;
+}
+
+
+.input-group select:focus {
+  outline: none;
+  border-color: #6c63ff; /* warna fokus */
+}
+
+/* Jika perlu, tambahkan gaya untuk icon agar tetap rata kiri */
+.input-group i.fa-venus-mars {
+  position: absolute;
+  padding: 12px;
+  pointer-events: none;
+  color: black;
+}
+
+
 input:focus{
     background-color: transparent;
     outline: transparent;
@@ -82,6 +112,13 @@ input:focus~label,input:not(:placeholder-shown)~label{
     color: blue;
     text-decoration: underline;
 }
+
+#logout {
+    background: red !important;
+    position: relative;
+    z-index: 9999;
+  }
+  
 
 .btn{
     font-size: 1.1rem;

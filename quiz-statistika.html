@@ -19,28 +19,21 @@
    
    <section class="flex">
 
-      <a href="home.html" class="logo">Matematika</a>
-
-      <form action="search.html" method="post" class="search-form">
-         <input type="text" name="search_box" required placeholder="search..." maxlength="100">
-         <button type="submit" class="fas fa-search"></button>
-      </form>
+      <a href="beranda.html" class="logo">Matematika</a>
 
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="search-btn" class="fas fa-search"></div>
+         <!-- <div id="search-btn" class="fas fa-search"></div> -->
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
       </div>
 
       <div class="profile">
-         <img src="images/pic-1.jpg" class="image" alt="">
-         <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
-         <p class="role">Murid</p>
-         <a href="profile.html" class="btn">view profile</a>
-         <div class="flex-btn">
-            <a href="logout.html" class="option-btn">logout</a>
-         </div>
+          <img src="images/pic-1.jpg" class="image" alt="">
+          <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
+          <p class="role">student</p>
+          <a href="profile.html" class="btn">view profile</a>
+          <button id="logout" class="btn">Logout</button>
       </div>
 
    </section>
@@ -66,6 +59,7 @@
       <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
       <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
       <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
+      <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
    </nav>
 
 </div>
@@ -90,35 +84,36 @@
 
 </section> -->
 
-<section class="courses">
+<section class="playlist-videos">
 
    <h1 class="heading">Quiz Statistika</h1>
 
    <div class="box-container">
 
-      <div class="box">
-         <div class="thumb">
-            <img src="images/thumb-1.png" alt="">
-         </div>
-         <h3 class="title">Populasi dan Sampel</h3>
-         <a href="quiz-populasi-sampel.html" class="inline-btn">view playlist</a>
-      </div>
+      <a class="box" href="quiz-populasi-sampel.html">
+         <i class='go'></i>
+         <img src="images/Populasi dan Sampel.png" alt="">
+         <h3>Populasi dan Sampel</h3>
+      </a>
 
-      <div class="box">
-         <div class="thumb">
-            <img src="images/thumb-2.png" alt="">
-         </div>
-         <h3 class="title">Ukuran Pemusatan Data</h3>
-         <a href="quiz-ukuran-pemusatan-data.html" class="inline-btn">view playlist</a>
-      </div>
+      <a class="box" href="quiz-ukuran-pemusatan-data.html">
+         <i class='go'></i>
+         <img src="images/Ukuran Pemusatan Data.png" alt="">
+         <h3>Ukuran Pemusatan Data</h3>
+      </a>
 
-      <div class="box">
-         <div class="thumb">
-            <img src="images/thumb-3.png" alt="">
-         </div>
-         <h3 class="title">Ukuran Penyebaran Data</h3>
-         <a href="quiz-ukuran-penyebaran-data.html" class="inline-btn">view playlist</a>
-      </div>
+      <a class="box" href="quiz-ukuran-penyebaran-data.html">
+         <i class='go'></i>
+         <img src="images/Ukuran Penyebaran Data.png" alt="">
+         <h3>Ukuran Penyebaran Data</h3>
+      </a>
+
+      <a class="box" href="quiz-merepresentasikan-data.html">
+         <i class='go'></i>
+         <img src="images/Merepresentasikan Data.png" alt="">
+         <h3>Merepresentasikan Data</h3>
+      </a>
+
 
    </div>
 
@@ -137,9 +132,11 @@
 
 
 
+
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
 <script type="module" src="./homepage.js"></script>
+<!-- <script type="module" src="./update-profile.js"></script> -->
    
 </body>
 </html>
