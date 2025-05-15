@@ -1613,6 +1613,14 @@ section{
       display: inline-block;
    }
    
+   .header .flex{
+      flex-direction: column;
+      align-items: flex-start;
+   }
+
+   .header .logo{
+      font-size: 1.5 rem;
+   }
 
    .header .flex .search-form{
       position: absolute;
@@ -1625,6 +1633,16 @@ section{
       padding: 2rem;
       clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
       transition: .2s linear;
+   }
+
+   .pdf-wrapper {
+      width: 100%;
+      overflow-x: auto;
+   }
+
+   canvas {
+      max-width: 100%;
+      height: auto;
    }
 
    .search-wrapper {
