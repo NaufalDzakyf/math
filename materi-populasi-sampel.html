@@ -4,7 +4,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>watch</title>
+   <title>Materi</title>
 
    <link rel="icon" href="/path/to/your/favicon.ico" type="image/x-icon">
 
@@ -67,15 +67,47 @@
 
 </div>
 
-<div class="as">
-   <div class="New" style="text-align: center; margin-top: 30px;">
-      <h3 class="title">Populasi dan Sampel</Data></h3>
-      <p style="margin-top: 1.1em; font-size: 1.1em;">Klik tombol di bawah untuk membuka materi Respresentasi Data:</p>
-      <a href="/Materi/Populasi dan Sampel.pdf" target="_blank" class="btn">📄 Buka PDF</a>
-      <p style="margin-top: 1.1em; font-size: 1.1em;">(PDF akan terbuka di tab baru. Jika tidak bisa, Anda bisa mengunduhnya langsung.)</p>
-      <a href="/Materi/Populasi dan Sampel.pdf" download class="btn">⬇️ Unduh PDF</a>
-   </div>
-</div>
+ <section class="lkpd-section">
+  <h2 class="heading">Materi Populasi dan Sampel</h2>
+  <div id="pdf-container" class="page-container"></div>
+ </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+  const pdfUrl = 'Materi/Populasi dan Sampel.pdf'; // ganti sesuai lokasi file
+  const container = document.getElementById('pdf-container');
+
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    for (let i = 1; i <= pdf.numPages; i++) {
+      renderPage(pdf, i);
+    }
+  });
+
+  function renderPage(pdf, pageNum) {
+    pdf.getPage(pageNum).then(page => {
+      const scale = Math.min(window.innerWidth / 800, 1.5); // max 1.5
+      const viewport = page.getViewport({ scale });
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('pdf-page');
+      wrapper.style.position = 'relative';
+      wrapper.style.width = '100%';
+      wrapper.style.margin = '0 auto';
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.width = '100%';
+      canvas.style.display = 'auto';
+
+      page.render({ canvasContext: context, viewport });
+
+      wrapper.appendChild(canvas);
+      container.appendChild(wrapper);
+    });
+  }
+
+</script>
 
 
 

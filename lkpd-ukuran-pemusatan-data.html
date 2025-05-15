@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LKPD Ukuran Pemusatan Data</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .box {
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      border: transparent;
+      border-radius: 12px;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .coin {
+      position: absolute;
+      width: 50px;
+      cursor: grab;
+      transition: top 0.2s, left 0.2s;
+      pointer-events: auto;
+    }
+
+    .pdf-wrapper {
+      position: relative;
+    }
+
+    .input-box {
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+ <header class="header">
+    <section class="flex">
+       <a href="beranda.html" class="logo">Matematika</a>
+ 
+       <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <!-- <div id="search-btn" class="fas fa-search"></div> -->
+       </div>
+ 
+       <div class="profile">
+          <img id="profileImage" src="images/pic-1.jpg" class="image" alt="">
+          <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
+          <p class="role">student</p>
+          <a href="profile.html" class="btn">view profile</a>
+          <button id="logout" class="btn">Logout</button>
+          </div>
+       </div>
+    </section>
+ </header>
+ 
+ <div class="side-bar">
+    <div id="close-btn">
+       <i class="fas fa-times"></i>
+    </div>
+ 
+    <div class="profile">
+       <img src="images/pic-1.jpg" class="image" alt="">
+       <div>Hello <span class="loggedUserFName"></span> <span class="loggedUserLName"></span></div>
+       <!-- <div>Last Name: <span class="loggedUserLName"></span></div> -->
+       <p class="role">Murid</p>
+       <a href="profile.html" class="btn">view profile</a>
+    </div>
+ 
+    <nav class="navbar">
+       <a href="beranda.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+       <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
+       <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
+       <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
+       <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
+    </nav>
+ </div>
+  
+
+<section class="lkpd-section">
+  <h2 class="heading">LKPD Ukuran Pemusatan Data</h2>
+  <div id="pdf-container" class="page-container"></div>
+  <button onclick="submitJawaban()" class="btn">Kirim Jawaban</button>
+</section>
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+<script>
+  const pdfUrl = 'LKPD/LKPD Ukuran Pemusatan Data.pdf';
+  const container = document.getElementById('pdf-container');
+
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    for (let i = 1; i <= pdf.numPages; i++) {
+      renderPage(pdf, i);
+    }
+  });
+
+  function renderPage(pdf, pageNum) {
+    pdf.getPage(pageNum).then(page => {
+      const maxCanvasWidth = 650;
+      const screenWidth = window.innerWidth;
+      const scale = Math.min(screenWidth / maxCanvasWidth, 1.5);
+      const viewport = page.getViewport({ scale });
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'pdf-wrapper';
+      wrapper.style.width = `${viewport.width}px`;
+      wrapper.style.margin = '0 auto';
+      wrapper.style.position = 'relative';
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.display = 'block';
+      
+      wrapper.appendChild(canvas);
+      container.appendChild(wrapper);
+      page.render({ canvasContext: context, viewport });
+
+      // Tambahkan box dan koin di halaman ke-2
+      if (pageNum === 2) {
+        const box1 = document.createElement('div');
+        const box2 = document.createElement('div');
+        const box3 = document.createElement('div');
+        const box4 = document.createElement('div');
+        
+        box1.id = 'box1';
+        box2.id = 'box2';
+        box3.id = 'box3';
+        box4.id = 'box4';
+        
+        box1.className = 'box';
+        box2.className = 'box';
+        box3.className = 'box';
+        box4.className = 'box';
+
+        box1.style.top = '170px';
+        box1.style.left = '90px';
+        
+        box2.style.top = '170px';
+        box2.style.left = '190px';
+        
+        box3.style.top = '170px';
+        box3.style.left = '290px';
+
+        box4.style.top = '170px';
+        box4.style.left = '390px';
+
+        wrapper.appendChild(box1);
+        wrapper.appendChild(box2);
+        wrapper.appendChild(box3);
+        wrapper.appendChild(box4);
+
+        // Tambah koin setelah box
+        for (let i = 0; i < 2; i++) addCoinToBox(box1, 'box1');
+        for (let i = 0; i < 2; i++) addCoinToBox(box2, 'box2');
+        for (let i = 0; i < 3; i++) addCoinToBox(box3, 'box3');
+        for (let i = 0; i < 5; i++) addCoinToBox(box4, 'box4');
+      }
+
+
+    });
+  }
+
+  function createInput(id, placeholder, top, left, height, width) {
+    const input = document.createElement('input');
+    input.id = id;
+    input.placeholder = placeholder;
+    input.className = 'input-box';
+    Object.assign(input.style, {
+      position: 'absolute',
+      top: `${top}px`,
+      left: `${left}px`,
+      height: `${height}px`,
+      width: `${width}px`,
+      padding: '5px',
+      fontSize: '14px'
+    });
+    return input;
+  }
+
+  function submitJawaban() {
+    const data = {
+      nama: document.getElementById('nama')?.value || '',
+    };
+    console.log('Data terkirim:', data);
+    alert('Jawaban berhasil dikumpulkan (simulasi)');
+  }
+
+  // --- Koin dan Box Logic ---
+  const boxData = { box1: [], box2: [], box3: [], box4: []};
+  let coinIdCounter = 0;
+  let currentTopZIndex = 100;
+
+  function addCoinToBox(box, boxId) {
+    const coin = document.createElement('img');
+    coin.src = 'coin.png';
+    coin.className = 'coin';
+    coin.id = 'coin-' + coinIdCounter++;
+    box.appendChild(coin);
+    boxData[boxId].push(coin);
+    updateStackPositions(boxId);
+    enableDrag(coin);
+  }
+
+  function removeCoinFromBox(coin) {
+    for (let key in boxData) {
+      const idx = boxData[key].indexOf(coin);
+      if (idx !== -1) {
+        boxData[key].splice(idx, 1);
+        updateStackPositions(key);
+        return key;
+      }
+    }
+    return null;
+  }
+
+  function updateStackPositions(boxId) {
+  const box = document.getElementById(boxId);
+  const coinWidth = 50;
+  const coinHeight = 50;
+  boxData[boxId].forEach((coin, i) => {
+    coin.style.left = (box.clientWidth - coinWidth) / 2 + 'px';
+    coin.style.top = (box.clientHeight - coinHeight - i * 10) + 'px';
+    if (!coin.classList.contains('dragging')) {
+      coin.style.zIndex = i + 1;
+    }
+  });
+  }
+
+  function enableDrag(coin) {
+    let offsetX = 0, offsetY = 0;
+    let isDragging = false;
+
+    const startDrag = (e) => {
+      e.preventDefault();
+      isDragging = true;
+      const rect = coin.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      offsetX = clientX - rect.left;
+      offsetY = clientY - rect.top;
+
+      coin.classList.add('dragging');
+      coin.style.zIndex = ++currentTopZIndex;
+    };
+
+    const onDrag = (e) => {
+      if (!isDragging) return;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      coin.style.left = (clientX - offsetX - coin.parentElement.getBoundingClientRect().left) + 'px';
+      coin.style.top = (clientY - offsetY - coin.parentElement.getBoundingClientRect().top) + 'px';
+    };
+
+    const stopDrag = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+
+      const coinRect = coin.getBoundingClientRect();
+      const box1Rect = document.getElementById('box1').getBoundingClientRect();
+      const box2Rect = document.getElementById('box2').getBoundingClientRect();
+      const box3Rect = document.getElementById('box3').getBoundingClientRect();
+      const box4Rect = document.getElementById('box4').getBoundingClientRect();
+
+      const droppedInBox1 = isInside(coinRect, box1Rect);
+      const droppedInBox2 = isInside(coinRect, box2Rect);
+      const droppedInBox3 = isInside(coinRect, box3Rect);
+      const droppedInBox4 = isInside(coinRect, box4Rect);
+      const asal = removeCoinFromBox(coin);
+
+      coin.classList.remove('dragging');
+
+      if (droppedInBox1) {
+        const box = document.getElementById('box1');
+        const boxRect = box.getBoundingClientRect();
+        coin.style.left = (coinRect.left - boxRect.left) + 'px';
+        coin.style.top = (coinRect.top - boxRect.top) + 'px';
+        box.appendChild(coin);
+        boxData['box1'].push(coin);
+      } else if (droppedInBox2) {
+        const box = document.getElementById('box2');
+        const boxRect = box.getBoundingClientRect();
+        coin.style.left = (coinRect.left - boxRect.left) + 'px';
+        coin.style.top = (coinRect.top - boxRect.top) + 'px';
+        box.appendChild(coin);
+        boxData['box2'].push(coin);
+      } else if (droppedInBox3) {
+        const box = document.getElementById('box3');
+        const boxRect = box.getBoundingClientRect();
+        coin.style.left = (coinRect.left - boxRect.left) + 'px';
+        coin.style.top = (coinRect.top - boxRect.top) + 'px';
+        box.appendChild(coin);
+        boxData['box3'].push(coin);
+      } else if (droppedInBox4) {
+        const box = document.getElementById('box4');
+        const boxRect = box.getBoundingClientRect();
+        coin.style.left = (coinRect.left - boxRect.left) + 'px';
+        coin.style.top = (coinRect.top - boxRect.top) + 'px';
+        box.appendChild(coin);
+        boxData['box3'].push(coin);
+      };
+    }
+    coin.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
+    coin.addEventListener('touchstart', startDrag, { passive: false });
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('touchend', stopDrag);
+  }
+
+  function isInside(rect, target) {
+    return (
+      rect.left >= target.left &&
+      rect.right <= target.right &&
+      rect.top >= target.top &&
+      rect.bottom <= target.bottom
+    );
+  }
+</script>
+
+<script type="module" src="js/script.js"></script>
+<script type="module" src="./homepage.js"></script>
+
+</body>
+</html>

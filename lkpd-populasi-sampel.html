@@ -4,9 +4,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>watch</title>
-
-   <link rel="icon" href="/path/to/your/favicon.ico" type="image/x-icon">
+   <title>Beranda</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -16,83 +14,146 @@
 
 </head>
 <body>
-
-<header class="header">
-   
-   <section class="flex">
-
-      <a href="beranda.html" class="logo">Matematika</a>
-
-
-      <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
-         <!-- <div id="search-btn" class="fas fa-search"></div> -->
-         <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
-      </div>
-
-      <div class="profile">
-          <img src="images/pic-1.jpg" class="image" alt="">
+ <header class="header">
+    <section class="flex">
+       <a href="beranda.html" class="logo">Matematika</a>
+ 
+       <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <!-- <div id="search-btn" class="fas fa-search"></div> -->
+       </div>
+ 
+       <div class="profile">
+          <img id="profileImage" src="images/pic-1.jpg" class="image" alt="">
           <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
           <p class="role">student</p>
           <a href="profile.html" class="btn">view profile</a>
           <button id="logout" class="btn">Logout</button>
-      </div>
+          </div>
+       </div>
+    </section>
+ </header>
+ 
+ <div class="side-bar">
+    <div id="close-btn">
+       <i class="fas fa-times"></i>
+    </div>
+ 
+    <div class="profile">
+       <img src="images/pic-1.jpg" class="image" alt="">
+       <div>Hello <span class="loggedUserFName"></span> <span class="loggedUserLName"></span></div>
+       <!-- <div>Last Name: <span class="loggedUserLName"></span></div> -->
+       <p class="role">Murid</p>
+       <a href="profile.html" class="btn">view profile</a>
+    </div>
+ 
+    <nav class="navbar">
+       <a href="beranda.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+       <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
+       <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
+       <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
+       <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
+    </nav>
+ </div>
 
-   </section>
+ <section class="lkpd-section">
+  <h2 class="heading">Isi LKPD Populasi dan Sampel</h2>
+  <div id="pdf-container" class="page-container"></div>
+  <div id="coin-layer"></div>
+  <button onclick="submitJawaban()" class="btn">Kirim Jawaban</button>
+ </section>
 
-</header>   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+  const pdfUrl = 'LKPD/LKPD Populasi dan Sampel.pdf'; // ganti sesuai lokasi file
+  const container = document.getElementById('pdf-container');
 
-<div class="side-bar">
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    for (let i = 1; i <= pdf.numPages; i++) {
+      renderPage(pdf, i);
+    }
+  });
 
-   <div id="close-btn">
-      <i class="fas fa-times"></i>
-   </div>
+  function renderPage(pdf, pageNum) {
+  pdf.getPage(pageNum).then(page => {
+    const maxCanvasWidth = 650;
+    const screenWidth = window.innerWidth;
+    const scale = Math.min(screenWidth / maxCanvasWidth, 1.5); // jangan melebihi 1.5 
+    const viewport = page.getViewport({ scale });
 
-   <div class="profile">
-      <img src="images/pic-1.jpg" class="image" alt="">
-      <div>Hello <span class="loggedUserFName"></span> <span class="loggedUserLName"></span></div>
-      <!-- <div>Last Name: <span class="loggedUserLName"></span></div> -->
-      <p class="role">Murid</p>
-      <a href="profile.html" class="btn">view profile</a>
-   </div>
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pdf-wrapper';
+    wrapper.style.position = 'relative';
+    wrapper.style.width = `${viewport.width}px`;
+    wrapper.style.margin = '0 auto';
 
-   <nav class="navbar">
-      <a href="beranda.html"><i class="fas fa-home"></i><span>Beranda</span></a>
-      <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
-      <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
-      <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
-      <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
-   </nav>
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.style.display = 'block';
 
-</div>
-
-<div class="as">
-   <div class="New" style="text-align: center; margin-top: 30px;">
-      <h3 class="title">Populasi dan Sampel</Data></h3>
-      <p style="margin-top: 1.1em; font-size: 1.1em;">Klik tombol di bawah untuk membuka materi Respresentasi Data:</p>
-      <a href="/Materi/Populasi dan Sampel.pdf" target="_blank" class="btn">📄 Buka PDF</a>
-      <p style="margin-top: 1.1em; font-size: 1.1em;">(PDF akan terbuka di tab baru. Jika tidak bisa, Anda bisa mengunduhnya langsung.)</p>
-      <a href="/Materi/Populasi dan Sampel.pdf" download class="btn">⬇️ Unduh PDF</a>
-   </div>
-</div>
-
-
-
+    page.render({ canvasContext: context, viewport });
 
 
+    wrapper.appendChild(canvas);
+    container.appendChild(wrapper);
+  });
+}
+
+function createInput(id, placeholder, top, left, height, width) {
+  const input = document.createElement('input');
+  input.id = id;
+  input.placeholder = placeholder;
+  input.className = 'input-box';
+  Object.assign(input.style, {
+    position: 'absolute',
+    top: `${top}px`,
+    left: `${left}px`,
+    height: `${height}px`,
+    width: `${width}px`,
+    padding: '5px',
+    fontSize: '14px',
+    zIndex: 10
+  });
+  return input;
+}
+
+  function createTextArea(id, placeholder, top, left, width) {
+    const ta = document.createElement('textarea');
+    ta.id = id;
+    ta.placeholder = placeholder;
+    ta.className = 'input-box';
+    Object.assign(ta.style, {
+      top, left, position: 'absolute',
+      padding: '5px', fontSize: '14px',
+      height: '60px', width
+    });
+    return ta;
+  }
+
+  function submitJawaban() {
+    const data = {
+      nama: document.getElementById('nama')?.value || '',
+      kelas: document.getElementById('kelas')?.value || '',
+      jawaban1: document.getElementById('jawaban1')?.value || '',
+      jawaban2: document.getElementById('jawaban2')?.value || '',
+    };
+    console.log('Data terkirim:', data);
+    alert('Jawaban berhasil dikumpulkan (simulasi)');
+  }
+</script>
+
+ 
 
 
 
 
-
-
-
-
-<!-- custom js file link  -->
-<script src="js/script.js"></script>
+ <!-- custom js file link  -->
+<script src="js/script.js"></script>   
 <script type="module" src="./homepage.js"></script>
-<!-- <script type="module" src="leaderboard1.js"></script> -->
 <!-- <script type="module" src="./update-profile.js"></script> -->
 
 </body>
