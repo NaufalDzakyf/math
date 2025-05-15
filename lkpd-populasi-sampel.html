@@ -14,55 +14,11 @@
 
 </head>
 <body>
- <header class="header">
-    <section class="flex">
-       <a href="beranda.html" class="logo">Matematika</a>
- 
-       <div class="icons">
-          <div id="menu-btn" class="fas fa-bars"></div>
-          <div id="toggle-btn" class="fas fa-sun"></div>
-          <div id="user-btn" class="fas fa-user"></div>
-          <!-- <div id="search-btn" class="fas fa-search"></div> -->
-       </div>
- 
-       <div class="profile">
-          <img id="profileImage" src="images/pic-1.jpg" class="image" alt="">
-          <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
-          <p class="role">student</p>
-          <a href="profile.html" class="btn">view profile</a>
-          <button id="logout" class="btn">Logout</button>
-          </div>
-       </div>
-    </section>
- </header>
- 
- <div class="side-bar">
-    <div id="close-btn">
-       <i class="fas fa-times"></i>
-    </div>
- 
-    <div class="profile">
-       <img src="images/pic-1.jpg" class="image" alt="">
-       <div>Hello <span class="loggedUserFName"></span> <span class="loggedUserLName"></span></div>
-       <!-- <div>Last Name: <span class="loggedUserLName"></span></div> -->
-       <p class="role">Murid</p>
-       <a href="profile.html" class="btn">view profile</a>
-    </div>
- 
-    <nav class="navbar">
-       <a href="beranda.html"><i class="fas fa-home"></i><span>Beranda</span></a>
-       <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
-       <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
-       <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
-       <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
-    </nav>
- </div>
 
  <section class="lkpd-section">
   <h2 class="heading">Isi LKPD Populasi dan Sampel</h2>
   <div id="pdf-container" class="page-container"></div>
   <div id="coin-layer"></div>
-  <button onclick="submitJawaban()" class="btn">Kirim Jawaban</button>
  </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
@@ -80,14 +36,18 @@
   pdf.getPage(pageNum).then(page => {
     const maxCanvasWidth = 650;
     const screenWidth = window.innerWidth;
-    const scale = Math.min(screenWidth / maxCanvasWidth, 1.5); // jangan melebihi 1.5 
+
+    // Gunakan skala tetap agar tajam di HP
+    const isMobile = window.innerWidth < 768; 
+    const scale = isMobile ? 1.2 : 2.5;
     const viewport = page.getViewport({ scale });
+    const vw = viewport.width;
 
     const wrapper = document.createElement('div');
     wrapper.className = 'pdf-wrapper';
-    wrapper.style.position = 'relative';
     wrapper.style.width = `${viewport.width}px`;
     wrapper.style.margin = '0 auto';
+    wrapper.style.position = 'relative';
 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -95,11 +55,10 @@
     canvas.height = viewport.height;
     canvas.style.display = 'block';
 
-    page.render({ canvasContext: context, viewport });
-
-
     wrapper.appendChild(canvas);
     container.appendChild(wrapper);
+    page.render({ canvasContext: context, viewport });
+
   });
 }
 

@@ -17,56 +17,6 @@
 </head>
 <body>
 
-<header class="header">
-   
-   <section class="flex">
-
-      <a href="beranda.html" class="logo">Matematika</a>
-
-
-      <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
-         <!-- <div id="search-btn" class="fas fa-search"></div> -->
-         <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
-      </div>
-
-      <div class="profile">
-          <img src="images/pic-1.jpg" class="image" alt="">
-          <h3 class="name"><span class="loggedUserFName"></span> <span class="loggedUserLName"></span></h3>
-          <p class="role">student</p>
-          <a href="profile.html" class="btn">view profile</a>
-          <button id="logout" class="btn">Logout</button>
-      </div>
-
-   </section>
-
-</header>   
-
-<div class="side-bar">
-
-   <div id="close-btn">
-      <i class="fas fa-times"></i>
-   </div>
-
-   <div class="profile">
-      <img src="images/pic-1.jpg" class="image" alt="">
-      <div>Hello <span class="loggedUserFName"></span> <span class="loggedUserLName"></span></div>
-      <!-- <div>Last Name: <span class="loggedUserLName"></span></div> -->
-      <p class="role">Murid</p>
-      <a href="profile.html" class="btn">view profile</a>
-   </div>
-
-   <nav class="navbar">
-      <a href="beranda.html"><i class="fas fa-home"></i><span>Beranda</span></a>
-      <a href="video.html"><i class="fa fa-video-camera"></i><span>Video</span></a>
-      <a href="materi.html"><i class="fa fa-book"></i><span>Materi</span></a>
-      <a href="quiz.html"><i class="fa fa-pencil"></i><span>Quiz</span></a>
-      <a href="lkpd.html"><i class="fa fa-pencil"></i><span>LKPD</span></a>
-   </nav>
-
-</div>
-
  <section class="lkpd-section">
   <h2 class="heading">Materi Ukuran Pemusatan Data</h2>
   <div id="pdf-container" class="page-container"></div>
@@ -85,19 +35,19 @@
 
   function renderPage(pdf, pageNum) {
     pdf.getPage(pageNum).then(page => {
-      const scale = Math.min(window.innerWidth / 800, 1.5); // max 1.5
+      const isMobile = window.innerWidth <=768
+      const scale = isMobile ? 1.2 : 1.5; // max 1.5
       const viewport = page.getViewport({ scale });
       const wrapper = document.createElement('div');
       wrapper.classList.add('pdf-page');
       wrapper.style.position = 'relative';
-      wrapper.style.width = '100%';
       wrapper.style.margin = '0 auto';
 
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
-      canvas.style.width = '100%';
+      canvas.style.display = 'block';
       canvas.style.display = 'auto';
 
       page.render({ canvasContext: context, viewport });
@@ -108,3 +58,24 @@
   }
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+<script type="module" src="./homepage.js"></script>
+<!-- <script type="module" src="leaderboard1.js"></script> -->
+<!-- <script type="module" src="./update-profile.js"></script> -->
+
+</body>
+</html>
