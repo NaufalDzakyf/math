@@ -1,29 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Beranda</title>
-
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-   <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LKPD Populasi dan Sampel</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .input-box {
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 </head>
 <body>
 
- <section class="lkpd-section">
+<section class="lkpd-section">
   <h2 class="heading">Isi LKPD Populasi dan Sampel</h2>
   <div id="pdf-container" class="page-container"></div>
-  <div id="coin-layer"></div>
- </section>
+</section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<!-- Firebase Firestore & Script -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+      apiKey: "AIzaSyD7L2c0-5mADZIWV_nhOkoFVsIlUAQCWQI",
+      authDomain: "math-98433.firebaseapp.com",
+      projectId: "math-98433",
+      storageBucket: "math-98433.firebasestorage.app",
+      messagingSenderId: "820271754279",
+      appId: "1:820271754279:web:da130cae80911f3021f202"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.submitJawaban = async function () {
+    const data = {
+      nama: document.getElementById('nama')?.value || '',
+      kelas: document.getElementById('kelas')?.value || '',
+      jawaban1: document.getElementById('jawaban1')?.value || '',
+      jawaban2: document.getElementById('jawaban2')?.value || '',
+      jawaban3: document.getElementById('jawaban3')?.value || '',
+      jawaban4: document.getElementById('jawaban4')?.value || '',
+      jawaban5: document.getElementById('jawaban5')?.value || '',
+      jawaban6: document.getElementById('jawaban6')?.value || '',
+      timestamp: new Date()
+    };
+
+    if (!data.nama || !data.kelas) {
+      alert("Nama dan kelas wajib diisi.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "jawaban_lkpd"), data);
+      alert("Jawaban berhasil dikirim ke Firebase!");
+    } catch (error) {
+      console.error("Gagal menyimpan data:", error);
+      alert("Gagal mengirim jawaban.");
+    }
+  };
+</script>
+
+<!-- PDF Rendering + Input -->
 <script>
-  const pdfUrl = 'LKPD/LKPD Populasi dan Sampel.pdf'; // ganti sesuai lokasi file
+  const pdfUrl = 'LKPD/LKPD Populasi dan Sampel.pdf'; // sesuaikan dengan lokasi PDF kamu
   const container = document.getElementById('pdf-container');
 
   pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
@@ -33,87 +76,99 @@
   });
 
   function renderPage(pdf, pageNum) {
-  pdf.getPage(pageNum).then(page => {
-    const maxCanvasWidth = 650;
-    const screenWidth = window.innerWidth;
+    pdf.getPage(pageNum).then(page => {
+      const isMobile = window.innerWidth < 768;
+      const scale = isMobile ? 1.2 : 2.5;
+      const viewport = page.getViewport({ scale });
 
-    // Gunakan skala tetap agar tajam di HP
-    const isMobile = window.innerWidth < 768; 
-    const scale = isMobile ? 1.2 : 2.5;
-    const viewport = page.getViewport({ scale });
-    const vw = viewport.width;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'pdf-wrapper';
+      wrapper.style.width = `${viewport.width}px`;
+      wrapper.style.margin = '0 auto';
+      wrapper.style.position = 'relative';
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pdf-wrapper';
-    wrapper.style.width = `${viewport.width}px`;
-    wrapper.style.margin = '0 auto';
-    wrapper.style.position = 'relative';
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.display = 'block';
 
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    canvas.style.display = 'block';
+      wrapper.appendChild(canvas);
+      container.appendChild(wrapper);
+      page.render({ canvasContext: context, viewport });
 
-    wrapper.appendChild(canvas);
-    container.appendChild(wrapper);
-    page.render({ canvasContext: context, viewport });
+      
+      // Input di halaman 2 + Tombol Submit
+      if (pageNum === 2) {
+        wrapper.appendChild(createInput('nama', '...', 115, 525, 20, 150));
+        wrapper.appendChild(createInput('kelas', '...', 135, 525, 20, 150));
+        wrapper.appendChild(createTextArea('jawaban1', '......', '232px', '520px', '150px', '20px'));
+        wrapper.appendChild(createTextArea('jawaban2', '......', '376px', '554px', '130px', '20px'));
+        wrapper.appendChild(createTextArea('jawaban3', '......', '516px', '337px', '200px', '20px'));
+        wrapper.appendChild(createTextArea('jawaban4', '......', '644px', '216px', '200px', '20px'));
+        wrapper.appendChild(createTextArea('jawaban5', '......', '773px', '315px', '200px', '20px'));
+        wrapper.appendChild(createTextArea('jawaban6', '......', '877px', '523px', '150px', '20px'));
 
-  });
-}
+        const button = document.createElement('button');
+        button.innerText = 'Kumpulkan Jawaban';
+        button.onclick = submitJawaban;
+        Object.assign(button.style, {
+          position: 'absolute',
+          top: '900px',
+          left: '50px',
+          padding: '10px 20px',
+          fontSize: '16px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          zIndex: 10
+        });
+        wrapper.appendChild(button);
+      }
+    });
+  }
 
-function createInput(id, placeholder, top, left, height, width) {
-  const input = document.createElement('input');
-  input.id = id;
-  input.placeholder = placeholder;
-  input.className = 'input-box';
-  Object.assign(input.style, {
-    position: 'absolute',
-    top: `${top}px`,
-    left: `${left}px`,
-    height: `${height}px`,
-    width: `${width}px`,
-    padding: '5px',
-    fontSize: '14px',
-    zIndex: 10
-  });
-  return input;
-}
+  function createInput(id, placeholder, top, left, height, width) {
+    const input = document.createElement('input');
+    input.id = id;
+    input.placeholder = placeholder;
+    input.className = 'input-box';
+    Object.assign(input.style, {
+      position: 'absolute',
+      top: `${top}px`,
+      left: `${left}px`,
+      height: `${height}px`,
+      width: `${width}px`,
+      padding: '5px',
+      fontSize: '14px',
+      zIndex: 10,
+    });
+    return input;
+  }
 
-  function createTextArea(id, placeholder, top, left, width) {
+  function createTextArea(id, placeholder, top, left, widths, heights) {
     const ta = document.createElement('textarea');
     ta.id = id;
     ta.placeholder = placeholder;
     ta.className = 'input-box';
     Object.assign(ta.style, {
-      top, left, position: 'absolute',
-      padding: '5px', fontSize: '14px',
-      height: '60px', width
+      top: top,
+      left: left,
+      height: '60px',
+      width: widths,
+      height: heights,
+      position: 'absolute',
+      padding: '5px',
+      fontSize: '14px',
+      zIndex: 10,
+      backgroundColor: '#d5d1d1',
+      fontFamily: 'Comic Sans MS, cursive, sans-serif'
     });
     return ta;
   }
-
-  function submitJawaban() {
-    const data = {
-      nama: document.getElementById('nama')?.value || '',
-      kelas: document.getElementById('kelas')?.value || '',
-      jawaban1: document.getElementById('jawaban1')?.value || '',
-      jawaban2: document.getElementById('jawaban2')?.value || '',
-    };
-    console.log('Data terkirim:', data);
-    alert('Jawaban berhasil dikumpulkan (simulasi)');
-  }
 </script>
-
- 
-
-
-
-
- <!-- custom js file link  -->
-<script src="js/script.js"></script>   
-<script type="module" src="./homepage.js"></script>
-<!-- <script type="module" src="./update-profile.js"></script> -->
 
 </body>
 </html>
